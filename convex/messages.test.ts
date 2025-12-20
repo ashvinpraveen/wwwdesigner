@@ -86,7 +86,7 @@ async function createSocialShare(t: TestConvex, chatId: string, sessionId: Id<"s
       chatId: (await getChatByIdOrUrlIdEnsuringAccess(ctx, { id: chatId, sessionId }))!._id,
       code,
       allowForkFromLatest: true,
-      shared: true,
+      shared: "shared",
       allowShowInGallery: true,
       linkToDeployed: true,
     });
@@ -1184,7 +1184,7 @@ describe("eraseMessageHistory", () => {
         .withIndex("byChatId", (q) => q.eq("chatId", chat!._id))
         .collect();
       for (const state of storageStates) {
-        await ctx.db.patch(state._id, { snapshotId: undefined });
+        await ctx.db.patch("chatMessagesStorageState", state._id, { snapshotId: undefined });
       }
     });
 
