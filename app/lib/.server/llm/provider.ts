@@ -76,9 +76,10 @@ export function getProvider(
     case 'Google': {
       model = modelForProvider(modelProvider, modelChoice);
       let google;
-      if (userApiKey) {
+      const envApiKey = getEnv('GOOGLE_API_KEY');
+      if (userApiKey || envApiKey) {
         google = createGoogleGenerativeAI({
-          apiKey: userApiKey || getEnv('GOOGLE_API_KEY'),
+          apiKey: userApiKey || envApiKey,
           fetch: userApiKey ? userKeyApiFetch('Google') : fetch,
         });
       } else {
